@@ -12,13 +12,17 @@ namespace InerfaceRocketFuel
         public void Update(ISubject subject)
         {
             GasPump pump = (GasPump)subject;
-            unpaidPumps.Add(pump);
-            Console.WriteLine("Card terminal:\n\tUnpaid stands:");
-            foreach(GasPump unpaidPump in unpaidPumps) {
-                Order order = unpaidPump.lastOrder;
-                Console.WriteLine($"\t  Pump {unpaidPump.Identity}: {order.Quantity} liter {order.Type} for {order.Price} {order.Currency}");
+            if(pump.lastOrder != null) {
+                unpaidPumps.Add(pump);
+                Console.WriteLine("Card terminal:\n\tUnpaid stands:");
+                foreach(GasPump unpaidPump in unpaidPumps) {
+                    Order order = unpaidPump.lastOrder;
+                    Console.WriteLine($"\t  Pump {unpaidPump.Identity}: {order.Quantity} liter {order.Type} for {order.Price} {order.Currency}");
+                }
+                Console.WriteLine("Choose pump and pay.");
+            } else if(unpaidPumps.Count == 0) {
+                Console.WriteLine("Everything paid");
             }
-            Console.WriteLine("Choose pump and pay.");
         }
 
         public void PayFilling(int stand)

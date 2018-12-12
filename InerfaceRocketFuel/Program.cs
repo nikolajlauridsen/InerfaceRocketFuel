@@ -10,51 +10,99 @@ namespace InerfaceRocketFuel
     {
         static void Main(string[] args)
         {
-            GasCompany rocketFuel = new GasCompany { BasePrice = 90 };
+            var rocketFuel = new GasCompany { BasePrice = 90.0 };
 
-            GasStation gs1 = new GasStation(Region.Sjælland, "København");
-            GasStation gs2 = new GasStation(Region.Fyn, "Odense");
-            GasStation gs3 = new GasStation(Region.Jylland, "Århus");
+            var gs1 = new GasStation(Region.Sjælland, "København");
+            var gs2 = new GasStation(Region.Fyn, "Odense");
+            var gs3 = new GasStation(Region.Jylland, "Århus");
 
             rocketFuel.Attach(gs1);
             rocketFuel.Attach(gs2);
             rocketFuel.Attach(gs3);
 
-            PriceBoard pb1 = new PriceBoard(1);
+            var pb1 = new PriceBoard(1);
+            var pb2 = new PriceBoard(2);
+            var pb3 = new PriceBoard(3);
+
+            Console.WriteLine("Tilknyt lysskilt til tankstation:");
             gs1.Attach(pb1);
-
-            PriceBoard pb2 = new PriceBoard(2);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt lysskilt til tankstation:");
             gs2.Attach(pb2);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt lysskilt til tankstation:");
+            gs3.Attach(pb3);
+            Console.WriteLine();
 
-            PriceBoard pb3 = new PriceBoard(3);
-            gs3.Attach(pb2);
+            Console.WriteLine($"Opdatér selskabets basispris til {100} kr:");
+            rocketFuel.BasePrice = 100;
+            Console.WriteLine();
+            Console.WriteLine($"Opdatér selskabets basispris til {105} kr:");
+            rocketFuel.BasePrice = 105;
+            Console.WriteLine();
+            Console.WriteLine($"Opdatér selskabets basispris til {95} kr:");
+            rocketFuel.BasePrice = 95;
+            Console.WriteLine();
 
-            GasPump p1 = new GasPump();
-            GasPump p2 = new GasPump();
-            gs1.Attach(p1);
-            gs1.Attach(p2);
-            CardTerminal terminal = new CardTerminal();
-            p1.Attach(terminal);
-            p2.Attach(terminal);
+            Console.WriteLine($"Sæt rabat på tankstation i {gs2.City}:");
+            gs2.Discount = true;
+            Console.WriteLine();
 
-            Console.WriteLine("Opdatere selskabets basispris til 100 kr\n");
+            Console.WriteLine($"Opdatér selskabets basispris til {100} kr:");
             rocketFuel.BasePrice = 100;
             Console.WriteLine();
 
-            Console.WriteLine("Pumper gas ved stand 1 i københavn");
-            p1.Pump(10);
-            p2.Pump(20);
-            Console.WriteLine("Prøver igen");
-            p1.Pump(100);
-            Console.WriteLine("Betaler og prøver igen");
-            terminal.PayFilling(1);
-            p1.SelectFuel(FuelType.HydroOxy);
-            p1.Pump(20);
-            p2.Pump(50);
+            Console.WriteLine($"Fjern rabat på tankstation i {gs2.City}:");
+            gs2.Discount = false;
             Console.WriteLine();
 
-            Console.WriteLine($"Opdatér selskabets basispris til {105} kr:\n");
-            rocketFuel.BasePrice = 105;
+            var gp1 = new GasPump();
+            var gp2 = new GasPump();
+            var gp3 = new GasPump();
+
+            Console.WriteLine("Tilknyt stander 1 til tankstation:");
+            gs1.Attach(gp1);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt stander 2 til tankstation:");
+            gs1.Attach(gp2);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt stander 3 til tankstation:");
+            gs1.Attach(gp3);
+            Console.WriteLine();
+
+            var ct = new CardTerminal();
+            Console.WriteLine("Tilknyt stander 1 til betalingsautomat:");
+            gp1.Attach(ct);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt stander 2 til betalingsautomat:");
+            gp2.Attach(ct);
+            Console.WriteLine();
+            Console.WriteLine("Tilknyt stander 3 til betalingsautomat:");
+            gp3.Attach(ct);
+            Console.WriteLine();
+
+            Console.WriteLine($"Vælg AlcoOxygen på stander 1 og tank 45 liter:");
+            gp1.SelectFuel(FuelType.AlcoOxy);
+            gp1.Pump(45.0);
+            Console.WriteLine();
+
+            Console.WriteLine($"Opdatér selskabets basispris til {110} kr:");
+            rocketFuel.BasePrice = 110;
+            Console.WriteLine();
+
+            Console.WriteLine($"Vælg HydroOxygen på stander 3 og tank 32 liter:");
+            gp3.SelectFuel(FuelType.HydroOxy);
+            gp3.Pump(32.0);
+            Console.WriteLine();
+
+            Console.WriteLine($"Betal regning på stander 1:");
+            ct.PayFilling(1);
+            Console.WriteLine();
+
+            Console.WriteLine($"Betal regning på stander 3:");
+            ct.PayFilling(3);
+            Console.WriteLine();
+
 
             Console.ReadKey(true);
 

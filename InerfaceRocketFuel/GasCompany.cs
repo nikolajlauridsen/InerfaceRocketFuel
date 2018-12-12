@@ -24,6 +24,7 @@ namespace InerfaceRocketFuel
         public void Attach(IObserver observer)
         {
             stations.Add((GasStation)observer);
+            observer.Update(this);
         }
 
         public void Detach(IObserver observer)

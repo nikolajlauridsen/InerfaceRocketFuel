@@ -24,13 +24,30 @@ namespace InerfaceRocketFuel
     {
         private List<IObserver> boards = new List<IObserver>();
         public readonly Region region;
-        public string By;
-        public bool OnSale = false;
+        public string City;
+        private bool sale = false;
+        public bool Discount {
+            get {
+                return sale;
+            }
+            set {
+                if(value == true) {
+                    ApplySale();
+                } else {
+                    /*
+                    todo fix this
+                    maybe add a reference to the GasCompany when getting the 
+                    inital update from the GasCompany
+                    this allows for future price reference while being "plug'n'play"
+                    */
+                }
+            }
+        }
 
         public GasStation(Region region, string by)
         {
             this.region = region;
-            this.By = by;
+            this.City = by;
         }
 
         public double HydroOxy { get; private set; }
@@ -64,17 +81,23 @@ namespace InerfaceRocketFuel
             AlcoOxy = AlcoOxy * multiplier;
 
             // Apply discount if the fuel is on sale
-            if (OnSale) {
-                multiplier = 0.9;
-                keroOxy = keroOxy * multiplier;
-                HydroOxy = HydroOxy * multiplier;
-                AlcoOxy = AlcoOxy * multiplier;
+            if (Discount) {
+                ApplySale();
             }
+        }
+
+        private void ApplySale()
+        {
+            double multiplier = 0.9;
+            keroOxy = keroOxy * multiplier;
+            HydroOxy = HydroOxy * multiplier;
+            AlcoOxy = AlcoOxy * multiplier;
         }
 
         public void Attach(IObserver observer)
         {
             boards.Add(observer);
+            observer.Update(this);
         }
 
         public void Detach(IObserver observer)
@@ -91,7 +114,6 @@ namespace InerfaceRocketFuel
 
         public void Update(ISubject subject)
         {
-            Console.WriteLine(String.Format("Station {0} ({1}) recieved new prices, relaying to boards...", region, By));
             this.KeroOxy = ((GasCompany)subject).BasePrice;
         }
     }

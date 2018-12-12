@@ -24,7 +24,7 @@ namespace InerfaceRocketFuel
             KeroOxy = station.KeroOxy;
             AlcoOxy = station.AlcoOxy;
             HydroOxy = station.HydroOxy;
-            Console.WriteLine(String.Format("Board nr. {0} recieved new prices from {1} ({2})\n\tKerosine: {3}\n\tAlcohol: {4}\n\tHydrogen: {5}\n", boardNo, station.region, station.By, KeroOxy, AlcoOxy, HydroOxy));
+            Console.WriteLine(String.Format("Board nr. {0} recieved new prices from {1} ({2})\n\tHydrogen: {5}\n\tKerosine: {3}\n\tAlcohol: {4}\n", boardNo, station.region, station.City, KeroOxy, AlcoOxy, HydroOxy));
         }
     }
 }

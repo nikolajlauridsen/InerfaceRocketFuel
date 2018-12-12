@@ -13,7 +13,7 @@ namespace InerfaceRocketFuel
         public double HydroOxy { get; private set; }
 
         private FuelType selectedType;
-        public Order lastOrder { get; private set; }
+        public Order lastOrder { get; private set; } = null;
         private static int IdentityTracker = 0;
         public int Identity { get; }
 
@@ -27,6 +27,7 @@ namespace InerfaceRocketFuel
         public void SelectFuel(FuelType type)
         {
             selectedType = type;
+
         }
 
         public void Pump(double quantity)
@@ -62,12 +63,13 @@ namespace InerfaceRocketFuel
             KeroOxy = station.KeroOxy;
             AlcoOxy = station.AlcoOxy;
             HydroOxy = station.HydroOxy;
-            Console.WriteLine(String.Format("Stand {0} at {1} ({2}) recieved new prices", Identity, station.region, station.By));
+            Console.WriteLine(String.Format("Stand {0} at {1} ({2}) recieved new prices", Identity, station.region, station.City));
         }
 
         public void Attach(IObserver observer)
         {
             observers.Add(observer);
+            observer.Update(this);
         }
 
         public void Detach(IObserver observer)
