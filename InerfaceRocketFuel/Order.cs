@@ -11,12 +11,19 @@ namespace InerfaceRocketFuel
         public FuelType Type;
         public double Quantity;
         public double Price;
+        public bool Paid { get; private set; }
 
         public Order(FuelType fuelType, double quanitiy, double price)
         {
             Type = fuelType;
             Quantity = quanitiy;
             Price = price;
+            Paid = false;
+        }
+
+        public void Pay()
+        {
+            Paid = true;
         }
 
         public override string ToString()

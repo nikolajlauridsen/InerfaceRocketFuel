@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InerfaceRocketFuel
 {
-    class GasPump : IObserver
+    class GasPump : IObserver, ISubject
     {
         public double KeroOxy { get; private set; }
         public double AlcoOxy { get; private set; }
@@ -16,6 +16,8 @@ namespace InerfaceRocketFuel
         public Order lastOrder { get; private set; }
         private static int IdentityTracker = 0;
         public int Identity { get; }
+
+        private List<IObserver> observers = new List<IObserver>();
 
         public GasPump()
         {
@@ -29,7 +31,7 @@ namespace InerfaceRocketFuel
 
         public void Pump(double quantity)
         {
-            if(lastOrder == null) {
+            if(lastOrder == null || lastOrder.Paid) {
                 double unitPrice, total;
                 switch (selectedType) {
                     case FuelType.KeroOxy:
@@ -61,6 +63,23 @@ namespace InerfaceRocketFuel
             AlcoOxy = station.AlcoOxy;
             HydroOxy = station.HydroOxy;
             Console.WriteLine(String.Format("Stand {0} at {1} ({2}) recieved new prices", Identity, station.region, station.By));
+        }
+
+        public void Attach(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach(IObserver observer in observers) {
+                observer.Update(this);
+            }
         }
     }
 }
