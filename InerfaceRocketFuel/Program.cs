@@ -29,9 +29,19 @@ namespace InerfaceRocketFuel
             PriceBoard pb3 = new PriceBoard(3);
             gs3.Attach(pb2);
 
+            GasPump p1 = new GasPump();
+            GasPump p2 = new GasPump();
+            gs1.Attach(p1);
+            gs1.Attach(p2);
+
             Console.WriteLine("Opdatere selskabets basispris til 100 kr\n");
             rocketFuel.BasePrice = 100;
             Console.WriteLine();
+
+            Console.WriteLine("Pumper gas ved stand 1 i københavn");
+            p1.Pump(10);
+            Console.WriteLine();
+
             Console.WriteLine($"Opdatér selskabets basispris til {105} kr:\n");
             rocketFuel.BasePrice = 105;
 

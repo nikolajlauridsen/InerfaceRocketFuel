@@ -13,12 +13,19 @@ namespace InerfaceRocketFuel
         Sjælland
     }
 
+    public enum FuelType
+    {
+        KeroOxy,
+        AlcoOxy,
+        HydroOxy
+    }
+
     public class GasStation : IObserver, ISubject
     {
         private List<IObserver> boards = new List<IObserver>();
         public readonly Region region;
         public string By;
-        public bool OnSale;
+        public bool OnSale = false;
 
         public GasStation(Region region, string by)
         {
@@ -34,13 +41,13 @@ namespace InerfaceRocketFuel
                 return keroOxy;
             }
             set {
-                setPrices(value);   // Sets all prices, keroOxy included
+                SetPrices(value);   // Sets all prices, keroOxy included
                 Notify();
             } }
 
 
 
-        private void setPrices(Double _keroPrice)
+        private void SetPrices(Double _keroPrice)
         {
             // Set prices
             keroOxy = _keroPrice;
