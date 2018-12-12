@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GasCompany.cs" />
+    <Compile Include="GasPump.cs" />
     <Compile Include="GasStation.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="ISubject.cs" />

@@ -15,7 +15,7 @@ namespace InerfaceRocketFuel
 
     public class GasStation : IObserver, ISubject
     {
-        private List<PriceBoard> boards = new List<PriceBoard>();
+        private List<IObserver> boards = new List<IObserver>();
         public readonly Region region;
         public string By;
         public bool OnSale;
@@ -67,25 +67,25 @@ namespace InerfaceRocketFuel
 
         public void Attach(IObserver observer)
         {
-            boards.Add((PriceBoard)observer);
+            boards.Add(observer);
         }
 
         public void Detach(IObserver observer)
         {
-            boards.Remove((PriceBoard)observer);
+            boards.Remove(observer);
         }
 
         public void Notify()
         {
-            foreach(PriceBoard board in boards) {
+            foreach(IObserver board in boards) {
                 board.Update(this);
             }
         }
 
-        public void Update(ISubject observer)
+        public void Update(ISubject subject)
         {
             Console.WriteLine(String.Format("Station {0} ({1}) recieved new prices, relaying to boards...", region, By));
-            this.KeroOxy = ((GasCompany)observer).BasePrice;
+            this.KeroOxy = ((GasCompany)subject).BasePrice;
         }
     }
 }
