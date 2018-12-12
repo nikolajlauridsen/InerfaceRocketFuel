@@ -11,6 +11,7 @@ namespace InerfaceRocketFuel
         public FuelType Type;
         public double Quantity;
         public double Price;
+        public string Currency = "kr";
         public bool Paid { get; private set; }
 
         public Order(FuelType fuelType, double quanitiy, double price)

@@ -33,6 +33,9 @@ namespace InerfaceRocketFuel
             GasPump p2 = new GasPump();
             gs1.Attach(p1);
             gs1.Attach(p2);
+            CardTerminal terminal = new CardTerminal();
+            p1.Attach(terminal);
+            p2.Attach(terminal);
 
             Console.WriteLine("Opdatere selskabets basispris til 100 kr\n");
             rocketFuel.BasePrice = 100;
@@ -40,12 +43,14 @@ namespace InerfaceRocketFuel
 
             Console.WriteLine("Pumper gas ved stand 1 i københavn");
             p1.Pump(10);
+            p2.Pump(20);
             Console.WriteLine("Prøver igen");
             p1.Pump(100);
             Console.WriteLine("Betaler og prøver igen");
-            p1.lastOrder.Pay();
+            terminal.PayFilling(1);
             p1.SelectFuel(FuelType.HydroOxy);
             p1.Pump(20);
+            p2.Pump(50);
             Console.WriteLine();
 
             Console.WriteLine($"Opdatér selskabets basispris til {105} kr:\n");

@@ -49,7 +49,7 @@ namespace InerfaceRocketFuel
 
                 total = unitPrice * quantity;
                 lastOrder = new Order(selectedType, quantity, total);
-                Console.WriteLine(String.Format("Someone pumped fuel at stand {0}\n{1}", Identity, lastOrder.ToString()));
+                Notify();
             } else {
                 Console.WriteLine("This stand is closed untill payment is recieved ");
             }

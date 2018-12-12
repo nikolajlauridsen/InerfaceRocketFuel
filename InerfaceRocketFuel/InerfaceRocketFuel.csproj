@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardTerminal.cs" />
     <Compile Include="GasCompany.cs" />
     <Compile Include="GasPump.cs" />
     <Compile Include="GasStation.cs" />
