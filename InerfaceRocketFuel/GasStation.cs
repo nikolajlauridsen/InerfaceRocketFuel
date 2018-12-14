@@ -26,20 +26,20 @@ namespace InerfaceRocketFuel
         public readonly Region region;
         public string City;
         private bool sale = false;
+        private GasCompany currentCompany;  // The company the stations currently 
         public bool Discount {
             get {
                 return sale;
             }
             set {
                 if(value == true) {
+                    sale = true;
                     ApplySale();
+                    Notify();
                 } else {
-                    /*
-                    todo fix this
-                    maybe add a reference to the GasCompany when getting the 
-                    inital update from the GasCompany
-                    this allows for future price reference while being "plug'n'play"
-                    */
+                    sale = false;
+                    SetPrices(currentCompany.BasePrice);
+                    Notify();
                 }
             }
         }
@@ -114,6 +114,7 @@ namespace InerfaceRocketFuel
 
         public void Update(ISubject subject)
         {
+            currentCompany = (GasCompany)subject;
             this.KeroOxy = ((GasCompany)subject).BasePrice;
         }
     }
